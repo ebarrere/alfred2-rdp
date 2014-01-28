@@ -35,7 +35,7 @@
 				<integer>127</integer>
 				<key>script</key>
 				<string># variables
-APP="/Applications/iTap RDP.app/" # set this to the full path to your app if you want to use MS RDP, etc (set empty if you want to use default app)
+APP="" # set this to the full path to your app (e.g. "/Applications/iTap RDP.app/") if you want to use an app other than the default system app (set empty if you want to use default app)
 TMPFILE=/tmp/temp_session.rdp # if you want to put the tempfile somewhere other than /tmp
 
 # do not edit below this line unless you know what you're doing
