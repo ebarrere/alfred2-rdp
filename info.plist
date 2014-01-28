@@ -104,7 +104,7 @@ rm -f $TMPFILE</string>
 				<key>subtext</key>
 				<string>usage: rdp &lt;hostname/IP&gt;</string>
 				<key>text</key>
-				<string>Open iTap RDP to the provided hostname</string>
+				<string>Open RDP to the provided hostname</string>
 				<key>withspace</key>
 				<true/>
 			</dict>
