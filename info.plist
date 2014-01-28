@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>alfred2-rdp</string>
+	<key>connections</key>
+	<dict>
+		<key>4F908106-0F9F-4B38-8013-52BBA65129A4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7A55D360-8DB5-4B92-B6CD-FBF732863B31</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Elliott Barrere</string>
+	<key>description</key>
+	<string>Open Windows remote resktop session</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>RDP</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string># variables
+APP="/Applications/iTap RDP.app/" # set this to the full path to your app if you want to use MS RDP, etc (set empty if you want to use default app)
+TMPFILE=/tmp/temp_session.rdp # if you want to put the tempfile somewhere other than /tmp
+
+# do not edit below this line unless you know what you're doing
+
+QUERY={query}
+
+# split query on : for IP and port
+IP=${QUERY%:*}
+PORT=${QUERY#*:}
+if [[ $IP == $PORT ]]; then
+  PORT=3389
+fi
+
+# get search-domain if set, and append if IP looks like a shortname
+SD=$(awk '/^domain/ {print $2; exit}' /etc/resolv.conf)
+if [[ -n $SD ]] &amp;&amp; [[ ! $IP =~ '.' ]]; then
+  IP="${IP}.${SD}"
+fi
+
+echo "screen mode id:i:2
+use multimon:i:1
+session bpp:i:32
+full address:s:${IP}:${PORT}
+audiomode:i:0
+disable wallpaper:i:0
+disable full window drag:i:1
+disable menu anims:i:1
+disable themes:i:0
+alternate shell:s:
+shell working directory:s:
+authentication level:i:0
+connect to console:i:0
+gatewayusagemethod:i:0
+disable cursor setting:i:0
+allow font smoothing:i:0
+allow desktop composition:i:0
+bookmarktype:i:3
+use redirection server name:i:0
+" &gt; $TMPFILE
+
+if [[ -n $APP ]]; then
+  open $TMPFILE -a "$APP"
+else
+  open $TMPFILE
+fi
+
+sleep 2
+rm -f $TMPFILE</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>7A55D360-8DB5-4B92-B6CD-FBF732863B31</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>rdp</string>
+				<key>subtext</key>
+				<string>usage: rdp &lt;hostname/IP&gt;</string>
+				<key>text</key>
+				<string>Open iTap RDP to the provided hostname</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>4F908106-0F9F-4B38-8013-52BBA65129A4</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>4F908106-0F9F-4B38-8013-52BBA65129A4</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>7A55D360-8DB5-4B92-B6CD-FBF732863B31</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://www.continuum.us</string>
+</dict>
+</plist>
